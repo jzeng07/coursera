@@ -1,0 +1,44 @@
+Correct
+8 / 8 points
+1. 
+Check the box if the statement is true.
+
+Correct
+8 / 8 points
+2. 
+Check the box if the statement is true.
+
+4 / 8 points
+3. 
+For each of the following, check the box if and only if it is an accurate description of an advantage of (sound) static typing (for preventing the sort of things that ML's type system prevents).
+
+4 / 8 points
+4. 
+For the remaining questions, we will consider changing ML's type system in the following way: We allow a function that takes a tuple argument 𝚝𝟷 * 𝚝𝟸 * ... 𝚝𝚗 to be called not only with a tuple of that exact type but also with wider tuples 𝚝𝟷 * 𝚝𝟸 * ... 𝚝𝚗 * 𝚝(𝚗+𝟷) * 𝚝(𝚗+𝟸) * .... The typing rule for such calls is that the first n parts of the tuple must still have the "right" type for the call and the "extra" parts each need to have some type, but any type is fine. The evaluation rule for such calls is that the tuple argument is fully evaluated (including the "extra" parts) and the extra parts are simply inaccessible (ignored) by the function called.
+
+Note the only typing rule we change is the one for function calls.
+
+We assume the goals of the ML type system ("what it aims to prevent") are unchanged except that is okay to use these "too-wide tuples".
+
+Check a box below if and only if the corresponding statement is true.
+
+8 / 12 points
+5. 
+Check the box below only if the ML code does not type-check in regular ML and does type-check if we make the change to the type system described in Question 4. All the code below uses this function:
+
+
+1
+fun f1 (x,y) = x + y
+
+Correct
+4 / 4 points
+6. 
+Which of the reasons below is not an advantage of making the type-system change described in Question 4.
+
+
+Correct
+4 / 4 points
+7. 
+Which of the reasons below is not a disadvantage of making the type-system change described in Question 4.
+
+

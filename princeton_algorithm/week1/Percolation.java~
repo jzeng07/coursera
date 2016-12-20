@@ -1,0 +1,105 @@
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
+
+public class Percolation {
+    private int[] sites;
+    private int fullRoot;
+    private int fullCount;
+    private int row_len;
+
+    // create n-by-n grid, with all sites blocked
+    public Percolation(int n) {
+        if (n <= 0) {
+            java.lang.IllegalArgumentException
+        }
+        row_len = n;
+        sites = new int[n*n]; 
+        fullRoot = -1;
+        fullCount = 0;
+    }
+
+    // open site (row i, column j) if it is not open already
+    public void open(int i, int j) {
+        i--; j--;
+        sites[i*row_len + j] = i*row_len+j;
+    }
+
+    // is site (row i, column j) open?
+    public boolean isOpen(int i, int j) {
+        i--; j--;
+        return sites[i*row_len + j]> -1;
+    }
+
+    // is site (row i, column j) full?
+    public boolean isFull(int i, int j) {
+        i--; j--;
+        return connected(fullRoot, sites[i*row_len + j]);
+    }
+
+    // does the system percolate?
+    public boolean percolates() {
+        for (int j=1; j<n+1; j++) {
+            if isFull(n, j) return true;
+        }
+        return false;
+    }
+
+    private get_adj(i, j) {
+        int adjs[] = new int[3];
+        if (((j % row_len) > 0) and ((j % row_len) < row_len)) {
+            adjs = {i*row_len+j-1, (i-1)*row_len+j, i*row_len+j+1};
+        else if (((j % row_len) == 0)) {
+            adjs = {-1, (i-1)*row_len+j, i*row_len+j+1};
+        } else {
+            adjs = {i*row_len+j-1, (i-1)*row_len+j, -1};
+        }
+    }
+
+    private void fill(i) {
+        if ((i / row_len )== 0) {
+            if (fullRoot == -1) {
+                fullRoot = sites[i];
+            } else {
+                WeightedQuickUnionUF.union(fullRoot, sites[i]);
+            }
+        } else {
+            adjacents = get_adj(i, j);
+            for (int k=0; k<3; k++) {
+                idx = adjacents[k];
+                if (idx == -1) continue;
+                if (!isOpen(idx/row_len, idx%row_len)) continue;
+
+                if (isFull(idx/row_len, idx%row_len) {
+                    WeightedQuickUnionUF.union(fullRoot, sites[i]);
+                    break;
+                }
+            }
+
+            if (isFull(i/row_len, i%row_len)) {
+                for (int k=0; k<3; k++) {
+                    idx = adjacents[k];
+                    if (idx == -1) continue;
+                    if (!isOpen(idx/row_len, idx%row_len)) continue;
+
+                    if (!isFull(idx/row_len, idx%row_len)) {
+                        fill(idx);
+                    }
+                }
+            }
+        }
+    }
+
+
+    // test client (optional)
+    public static void main(String[] args) {
+        n = args[1];
+        while (!percolates()) {
+            i = StdRandom.uniform(n);
+            j = StdRandom.uniform(n);
+            open(i, j);
+            fill(i*row_len+j);
+        }    
+    }
+}
